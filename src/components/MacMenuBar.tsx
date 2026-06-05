@@ -7,22 +7,16 @@ import {
   WifiHighIcon,
 } from "@phosphor-icons/react";
 import { camelPng, claudeIcon } from "../assets";
-import type { Product } from "../config";
 
-/** Simulated macOS menu bar — pinned to top of viewport, shown on both products.
- *
- * Wallet: camel click toggles the floating wallet mockup.
- * Market: camel click cross-links to the wallet site (it lives in the menu bar
- *         because the wallet is the companion app every market agent needs).
+/** Simulated macOS menu bar — pinned to top of viewport.
+ * Overdraft + camel toggle the floating wallet mockup on every product page.
  */
 export function MacMenuBar({
-  product,
   mockupOpen,
-  onCamelClick,
+  onWalletClick,
 }: {
-  product: Product;
   mockupOpen: boolean;
-  onCamelClick: () => void;
+  onWalletClick: () => void;
 }) {
   const now = new Date();
   const dayName   = now.toLocaleDateString("en-US", { weekday: "short" });
@@ -31,12 +25,7 @@ export function MacMenuBar({
   const timeStr   = now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false });
   const dateTimeStr = `${dayName} ${dayNum} ${monthName} ${timeStr}`;
 
-  const appLabel =
-    product === "wallet"  ? "Overdraft Wallet" :
-    product === "market"  ? "Overdraft Market" :
-                            "Overdraft Economy";
-  const camelTitle = product === "wallet" ? "Toggle Overdraft wallet" : "Get Overdraft Wallet";
-  const camelActive = product === "wallet" && mockupOpen;
+  const walletTitle = "Toggle Overdraft wallet";
 
   return (
     <div
@@ -46,21 +35,15 @@ export function MacMenuBar({
       {/* Left — Apple logo + active app menus */}
       <div className="flex items-center gap-1">
         <AppleLogoIcon size={13} weight="fill" className="text-neutral-800 shrink-0 mx-2" />
-        {product === "wallet" ? (
-          <button
-            type="button"
-            onClick={onCamelClick}
-            className={`flex items-center rounded-md px-2 py-0.5 text-[13px] font-semibold text-neutral-900 transition-colors cursor-pointer ${
-              camelActive ? "bg-neutral-200/80" : "hover:bg-neutral-100"
-            }`}
-          >
-            {appLabel}
-          </button>
-        ) : (
-          <span className="flex items-center rounded-md px-2 py-0.5 text-[13px] font-semibold text-neutral-900">
-            {appLabel}
-          </span>
-        )}
+        <button
+          type="button"
+          onClick={onWalletClick}
+          className={`flex items-center rounded-md px-2 py-0.5 text-[13px] font-semibold text-neutral-900 transition-colors cursor-pointer ${
+            mockupOpen ? "bg-neutral-200/80" : "hover:bg-neutral-100"
+          }`}
+        >
+          Overdraft
+        </button>
         {["File", "Edit", "Window", "Help"].map((m) => (
           <span key={m} className="text-[13px] text-neutral-500 hidden sm:inline px-2 py-0.5">{m}</span>
         ))}
@@ -70,11 +53,11 @@ export function MacMenuBar({
       <div className="flex items-center">
         <button
           type="button"
-          onClick={onCamelClick}
-          title={camelTitle}
-          aria-label={camelTitle}
+          onClick={onWalletClick}
+          title={walletTitle}
+          aria-label={walletTitle}
           className={`flex items-center justify-center rounded-full px-2 py-0.5 transition-colors cursor-pointer ${
-            camelActive ? "bg-neutral-200/80" : "hover:bg-neutral-100"
+            mockupOpen ? "bg-neutral-200/80" : "hover:bg-neutral-100"
           }`}
         >
           <img src={camelPng} alt="" style={{ width: 16, height: 16, objectFit: "contain" }} />

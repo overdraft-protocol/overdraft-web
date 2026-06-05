@@ -10,7 +10,6 @@ import {
   DEFAULT_PRODUCT,
   isLocalDev,
   SITE_URLS,
-  WALLET_SITE_URL,
   type Product,
 } from "./config";
 
@@ -21,32 +20,28 @@ export default function App() {
   const [product, setProduct] = useState<Product>(DEFAULT_PRODUCT);
   const [mockupOpen, setMockupOpen] = useState(false);
 
-  const isWallet = product === "wallet";
-
   function onToggle(p: Product) {
     if (p === product) return;
     if (isLocalDev()) setProduct(p);
     else location.href = SITE_URLS[p];
   }
 
-  function onCamelClick() {
-    if (isWallet) setMockupOpen((v) => !v);
-    else if (isLocalDev()) setProduct("wallet");
-    else window.location.href = WALLET_SITE_URL;
+  function onWalletClick() {
+    setMockupOpen((v) => !v);
   }
 
   return (
     <>
-      <MacMenuBar product={product} mockupOpen={mockupOpen} onCamelClick={onCamelClick} />
+      <MacMenuBar mockupOpen={mockupOpen} onWalletClick={onWalletClick} />
 
-      {isWallet && mockupOpen && <FloatingAppMockup onClose={() => setMockupOpen(false)} />}
+      {mockupOpen && <FloatingAppMockup onClose={() => setMockupOpen(false)} />}
 
       <div className="min-h-screen flex flex-col bg-white font-sans antialiased text-neutral-900" style={{ paddingTop: 28 }}>
         <div className="flex flex-col flex-1 mx-auto px-6 pt-20 pb-5 w-full max-w-sm sm:max-w-xl">
           <Hero product={product} onToggle={onToggle} />
 
           <main className="flex-1">
-            {product === "wallet"  ? <WalletInstall onIconClick={() => setMockupOpen((v) => !v)} /> :
+            {product === "wallet"  ? <WalletInstall onIconClick={onWalletClick} /> :
              product === "market"  ? <MarketSite /> :
                                      <EconomySite />}
           </main>
