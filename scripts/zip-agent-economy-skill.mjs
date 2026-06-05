@@ -1,6 +1,6 @@
-// Pack src/content/agent-economy/ into public/agent-economy.zip for download.
+// Pack src/content/agent-economy/ into public/agent-economy.zip and .skill for download.
 import { execSync } from "node:child_process";
-import { existsSync, rmSync } from "node:fs";
+import { copyFileSync, existsSync, rmSync } from "node:fs";
 import { join } from "node:path";
 
 const root = join(import.meta.dirname, "..");
@@ -12,3 +12,4 @@ if (existsSync(zipPath)) rmSync(zipPath);
 const skillPath = join(publicDir, "agent-economy.skill");
 if (existsSync(skillPath)) rmSync(skillPath);
 execSync(`zip -r ${zipPath} agent-economy`, { cwd: contentDir, stdio: "inherit" });
+copyFileSync(zipPath, skillPath);

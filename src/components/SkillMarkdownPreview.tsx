@@ -57,12 +57,6 @@ export function SkillMarkdownPreview({ markdown }: { markdown: string }) {
 
   return (
     <div className="flex flex-col gap-2">
-      <button type="button" onClick={() => setExpanded((v) => !v)}
-        className="flex w-fit items-center gap-1 text-[11px] text-neutral-400 hover:text-neutral-600 transition-colors cursor-pointer">
-        <CaretDownIcon size={9} weight="bold" className={`transition-transform duration-200 ${expanded ? "rotate-180" : ""}`} />
-        Preview excerpt
-      </button>
-      {expanded && (
         <div className="overflow-hidden rounded-md border border-neutral-200 bg-neutral-50 font-mono">
           <div className="border-b border-neutral-200 px-4 py-2">
             <span className="text-[11px] text-neutral-500">SKILL.md</span>
@@ -75,7 +69,6 @@ export function SkillMarkdownPreview({ markdown }: { markdown: string }) {
             />
           </div>
         </div>
-      )}
     </div>
   );
 }

@@ -66,5 +66,17 @@ The wallet site has no such constraint; deploy `dist/wallet` to any static host.
 ## Dev
 
 ```bash
-npm run dev   # localhost:5174 — toggle switches product in-page
+npm run dev
 ```
+
+**Cross-subdomain testing** (mockup cookies, product navigation — mirrors production):
+
+- http://wallet.lvh.me:5174
+- http://market.lvh.me:5174
+- http://economy.lvh.me:5174
+
+`lvh.me` resolves to 127.0.0.1 and supports shared cookies across subdomains (browsers reject `domain=localhost` on `*.localhost`).
+
+Open the wallet mockup on one subdomain, switch products via the toggle, and it should stay open in the same position on the next subdomain.
+
+`localhost` and `*.localhost` redirect to the matching `*.lvh.me` host.
