@@ -64,8 +64,8 @@ export default function App() {
         />
       )}
 
-      <div className="min-h-screen flex flex-col bg-white font-sans antialiased text-neutral-900" style={{ paddingTop: 28 }}>
-        <div className="flex flex-col flex-1 mx-auto px-6 pt-20 pb-5 w-full max-w-sm sm:max-w-xl">
+      <div className="site-background flex flex-col font-sans antialiased text-neutral-900">
+        <div className="relative z-10 flex flex-col flex-1 mx-auto px-6 pt-20 pb-5 w-full max-w-sm sm:max-w-xl">
           <Hero product={product} onToggle={onToggle} />
 
           <main className="flex-1">
