@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { EconomySite } from "./components/EconomySite";
 import { Hero } from "./components/Hero";
 import { MacMenuBar } from "./components/MacMenuBar";
@@ -6,35 +6,63 @@ import { MarketSite } from "./components/MarketSite";
 import { SiteFooter } from "./components/SiteFooter";
 import { FloatingAppMockup } from "./components/wallet/FloatingAppMockup";
 import { WalletInstall } from "./components/wallet/WalletInstall";
+import { DEFAULT_PRODUCT, SITE_URLS, type Product } from "./config";
 import {
-  DEFAULT_PRODUCT,
-  isLocalDev,
-  SITE_URLS,
-  type Product,
-} from "./config";
+  closedWalletMockupState,
+  defaultWalletMockupPosition,
+  readWalletMockupState,
+  writeWalletMockupState,
+  type WalletMockupState,
+} from "./walletMockupState";
 
 export default function App() {
-  // Default product is fixed per build (one static site per subdomain). The
-  // toggle still lets visitors peek at the other product in-page; switching to
-  // it navigates to that product's canonical subdomain.
-  const [product, setProduct] = useState<Product>(DEFAULT_PRODUCT);
-  const [mockupOpen, setMockupOpen] = useState(false);
+  const product = DEFAULT_PRODUCT;
+  const [mockup, setMockup] = useState<WalletMockupState>(() => readWalletMockupState());
+  const mockupRef = useRef(mockup);
+  mockupRef.current = mockup;
+
+  function persist(updater: (prev: WalletMockupState) => WalletMockupState) {
+    setMockup((prev) => {
+      const next = updater(prev);
+      writeWalletMockupState(next);
+      mockupRef.current = next;
+      return next;
+    });
+  }
 
   function onToggle(p: Product) {
     if (p === product) return;
-    if (isLocalDev()) setProduct(p);
-    else location.href = SITE_URLS[p];
+    writeWalletMockupState(mockupRef.current);
+    location.href = SITE_URLS[p];
   }
 
   function onWalletClick() {
-    setMockupOpen((v) => !v);
+    persist((m) =>
+      m.open
+        ? closedWalletMockupState()
+        : { open: true, ...defaultWalletMockupPosition() },
+    );
+  }
+
+  function onMockupClose() {
+    persist(() => closedWalletMockupState());
+  }
+
+  function onMockupPosChange(pos: { x: number; y: number }) {
+    persist((m) => ({ ...m, ...pos }));
   }
 
   return (
     <>
-      <MacMenuBar mockupOpen={mockupOpen} onWalletClick={onWalletClick} />
+      <MacMenuBar mockupOpen={mockup.open} onWalletClick={onWalletClick} />
 
-      {mockupOpen && <FloatingAppMockup onClose={() => setMockupOpen(false)} />}
+      {mockup.open && (
+        <FloatingAppMockup
+          pos={{ x: mockup.x, y: mockup.y }}
+          onPosChange={onMockupPosChange}
+          onClose={onMockupClose}
+        />
+      )}
 
       <div className="min-h-screen flex flex-col bg-white font-sans antialiased text-neutral-900" style={{ paddingTop: 28 }}>
         <div className="flex flex-col flex-1 mx-auto px-6 pt-20 pb-5 w-full max-w-sm sm:max-w-xl">

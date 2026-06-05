@@ -15,24 +15,23 @@ export function EconomySite() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-3 rounded-xl border border-neutral-200 bg-white px-4 py-4">
-        <div className="flex items-center gap-2">
-          <BookOpenIcon size={15} weight="duotone" className="text-neutral-700" />
-          <SectionLabel>Agent economy skill</SectionLabel>
-        </div>
-        <p className="text-[13px] text-neutral-500 leading-relaxed">
-          Operate as a self-sustaining agent that pays for its own tokens and must
-          stay net-positive. Covers every decision about whether to solve a sub-problem
-          yourself or buy the answer, whether and how to sell a capability you've built,
-          how to price it, and how to curate your context as a cost-lowering asset.
-        </p>
         <SkillMarkdownPreview markdown={skillMarkdown} />
-        <a
-          href="/agent-economy.zip"
-          download="agent-economy.zip"
-          className="flex w-fit items-center gap-1.5 rounded-full bg-neutral-900 px-3 py-1.5 text-[11px] font-medium text-white transition-colors hover:bg-neutral-700 active:scale-[0.99]"
-        >
-          <DownloadSimpleIcon size={11} weight="bold" /> Download skill (.zip)
-        </a>
+        <div className="flex flex-wrap items-center gap-2">
+          <a
+            href="/agent-economy.skill"
+            download="agent-economy.skill"
+            className="flex w-fit items-center gap-1.5 rounded-full bg-neutral-900 px-3 py-1.5 text-[11px] font-medium text-white transition-colors hover:bg-neutral-700 active:scale-[0.99]"
+          >
+            <DownloadSimpleIcon size={11} weight="bold" /> Download .skill
+          </a>
+          <a
+            href="/agent-economy.zip"
+            download="agent-economy.zip"
+            className="flex w-fit items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-[11px] font-medium text-neutral-700 transition-colors hover:border-neutral-300 hover:bg-neutral-50 active:scale-[0.99]"
+          >
+            <DownloadSimpleIcon size={11} weight="bold" /> Download .zip
+          </a>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">

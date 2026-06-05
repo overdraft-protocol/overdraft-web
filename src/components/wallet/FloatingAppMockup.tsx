@@ -2,27 +2,38 @@ import { useRef, useState } from "react";
 import { AppMockupBody } from "./AppMockupBody";
 
 /** Draggable floating app window — triggered from menu bar camel */
-export function FloatingAppMockup({ onClose }: { onClose: () => void }) {
-  const [pos, setPos] = useState(() => ({
-    x: Math.max(20, window.innerWidth - 270),
-    y: 36,
-  }));
+export function FloatingAppMockup({
+  pos,
+  onPosChange,
+  onClose,
+}: {
+  pos: { x: number; y: number };
+  onPosChange: (pos: { x: number; y: number }) => void;
+  onClose: () => void;
+}) {
+  const [dragging, setDragging] = useState<{ x: number; y: number } | null>(null);
   const drag = useRef<{ ox: number; oy: number; px: number; py: number } | null>(null);
+  const view = dragging ?? pos;
 
   function onTitleMouseDown(e: React.MouseEvent) {
     if ((e.target as HTMLElement).closest("button")) return;
     e.preventDefault();
-    drag.current = { ox: e.clientX, oy: e.clientY, px: pos.x, py: pos.y };
+    drag.current = { ox: e.clientX, oy: e.clientY, px: view.x, py: view.y };
+
+    let latest = { x: view.x, y: view.y };
 
     function onMove(ev: MouseEvent) {
       if (!drag.current) return;
-      setPos({
+      latest = {
         x: drag.current.px + ev.clientX - drag.current.ox,
         y: drag.current.py + ev.clientY - drag.current.oy,
-      });
+      };
+      setDragging(latest);
     }
     function onUp() {
+      onPosChange(latest);
       drag.current = null;
+      setDragging(null);
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseup", onUp);
     }
@@ -32,10 +43,9 @@ export function FloatingAppMockup({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      style={{ position: "fixed", left: pos.x, top: pos.y, width: 220, zIndex: 9999, userSelect: "none" }}
+      style={{ position: "fixed", left: view.x, top: view.y, width: 220, zIndex: 9999, userSelect: "none" }}
     >
       <div className="overflow-hidden rounded-xl shadow-2xl" style={{ border: "1px solid #e5e5e5" }}>
-        {/* Draggable title bar — close button closes the mockup */}
         <div
           onMouseDown={onTitleMouseDown}
           className="flex items-center gap-1.5 px-2.5 py-1.5 border-b border-neutral-200 select-none"
