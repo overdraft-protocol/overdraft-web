@@ -6,6 +6,8 @@
 // the %VITE_*% placeholders in index.html.
 import { execSync } from "node:child_process";
 
+execSync("node scripts/zip-agent-economy-skill.mjs", { stdio: "inherit" });
+
 const PRODUCTS = {
   wallet: {
     outDir: "dist/wallet",
