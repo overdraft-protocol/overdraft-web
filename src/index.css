@@ -19,3 +19,37 @@
     @apply font-sans antialiased;
   }
 }
+
+@layer components {
+  .site-background {
+    position: relative;
+    margin-top: 28px;
+    min-height: calc(100vh - 28px);
+    overflow: hidden;
+    isolation: isolate;
+    background: #fff;
+  }
+
+  .site-background::before {
+    position: absolute;
+    content: "";
+    pointer-events: none;
+  }
+
+  .site-background::before {
+    inset: 0;
+    z-index: -1;
+    opacity: 0.85;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+      radial-gradient(circle, rgba(0, 0, 0, 0.075) 0 1px, transparent 1.5px),
+      radial-gradient(ellipse at top, rgba(0, 0, 0, 0.07), transparent 34rem);
+    background-size:
+      44px 44px,
+      44px 44px,
+      20px 20px,
+      100% 100%;
+    mask-image: radial-gradient(ellipse at center, transparent 0 18rem, rgba(0, 0, 0, 0.35) 27rem, #000 46rem);
+  }
+}
