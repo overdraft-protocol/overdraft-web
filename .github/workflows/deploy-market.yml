@@ -1,0 +1,21 @@
+name: Deploy market site
+
+on:
+  push:
+    branches: [prod]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'scripts/**'
+      - 'index.html'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - 'vite.config.ts'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger marketplace redeploy
+        run: curl -fsS -X POST "${{ secrets.RENDER_MARKETPLACE_DEPLOY_HOOK }}"
