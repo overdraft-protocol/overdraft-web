@@ -8,8 +8,10 @@
     "build": "node scripts/build.mjs all",
     "build:wallet": "node scripts/build.mjs wallet",
     "build:market": "node scripts/build.mjs market",
+    "build:economy": "node scripts/build.mjs economy",
     "preview:wallet": "vite preview --outDir dist/wallet --port 5174",
-    "preview:market": "vite preview --outDir dist/market --port 5175"
+    "preview:market": "vite preview --outDir dist/market --port 5175",
+    "preview:economy": "vite preview --outDir dist/economy --port 5176"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
