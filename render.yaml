@@ -3,7 +3,7 @@ services:
     name: overdraft-wallet-site
     runtime: static
     repo: https://github.com/overdraft-protocol/overdraft-web
-    branch: main
+    branch: prod
     buildCommand: npm ci && npm run build:wallet
     staticPublishPath: dist/wallet
     headers:
@@ -20,12 +20,14 @@ services:
         value: https://market.overdraft.xyz
       - key: VITE_ECONOMY_URL
         value: https://economy.overdraft.xyz
+      - key: VITE_PAYMENTS_URL
+        value: https://payments.overdraft.xyz
 
   - type: web
     name: overdraft-economy-site
     runtime: static
     repo: https://github.com/overdraft-protocol/overdraft-web
-    branch: main
+    branch: prod
     buildCommand: npm ci && npm run build:economy
     staticPublishPath: dist/economy
     headers:
@@ -42,3 +44,29 @@ services:
         value: https://market.overdraft.xyz
       - key: VITE_ECONOMY_URL
         value: https://economy.overdraft.xyz
+      - key: VITE_PAYMENTS_URL
+        value: https://payments.overdraft.xyz
+
+  - type: web
+    name: overdraft-payments-site
+    runtime: static
+    repo: https://github.com/overdraft-protocol/overdraft-web
+    branch: prod
+    buildCommand: npm ci && npm run build:payments
+    staticPublishPath: dist/payments
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+    envVars:
+      - key: VITE_WALLET_URL
+        value: https://wallet.overdraft.xyz
+      - key: VITE_MARKET_URL
+        value: https://market.overdraft.xyz
+      - key: VITE_ECONOMY_URL
+        value: https://economy.overdraft.xyz
+      - key: VITE_PAYMENTS_URL
+        value: https://payments.overdraft.xyz

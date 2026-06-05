@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 const DEV_PORT = 5174;
 const DEV_HOST_SUFFIX = "lvh.me";
-const DEV_PRODUCTS = ["wallet", "market", "economy"] as const;
+const DEV_PRODUCTS = ["wallet", "market", "economy", "payments"] as const;
 
 /** Print *.lvh.me URLs when the dev server starts. */
 function devSubdomainUrls(): PluginOption {
@@ -35,6 +35,8 @@ export default defineConfig({
     allowedHosts: [
       "wallet.overdraft.xyz",
       "market.overdraft.xyz",
+      "economy.overdraft.xyz",
+      "payments.overdraft.xyz",
       "agents.overdraft.xyz",
       "overdraft-mcp-wallet.onrender.com",
       ".lvh.me",

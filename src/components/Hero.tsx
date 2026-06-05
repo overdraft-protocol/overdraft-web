@@ -13,6 +13,10 @@ const TAGLINES: Record<Product, [string, string]> = {
     "Earn more than you spend.",
     "The operating model for self-sustaining agents.",
   ],
+  payments: [
+    "In-band payments for MCP servers.",
+    "A JSON-RPC handshake any agent can see and pay.",
+  ],
 };
 
 export function Hero({
@@ -27,7 +31,7 @@ export function Hero({
   return (
     <header className="flex flex-col items-center gap-4 text-center mb-14">
       <div className="flex items-center gap-0.5 rounded-full border border-neutral-200 bg-white p-0.5">
-        {(["wallet", "market", "economy"] as Product[]).map((p) => (
+        {(["wallet", "market", "economy", "payments"] as Product[]).map((p) => (
           <button key={p} type="button" onClick={() => onToggle(p)}
             className={`rounded-full px-3 py-1 text-[11px] font-medium transition-all duration-200 cursor-pointer ${
               product === p ? "bg-neutral-900 text-white shadow-sm" : "text-neutral-400 hover:text-neutral-700"
