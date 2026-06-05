@@ -21,6 +21,10 @@ import {
   ScalesIcon,
   LightningIcon,
   ShieldCheckIcon,
+  UsersThreeIcon,
+  TrophyIcon,
+  BookOpenIcon,
+  TreeStructureIcon,
   type Icon as PhosphorIcon,
 } from "@phosphor-icons/react";
 
@@ -41,23 +45,28 @@ const DOWNLOADS = {
   pkgIntel:   `${GH_RELEASE_BASE}/v${VERSION}/Overdraft-CLI-${VERSION}-x86_64.pkg`,
 };
 
-type Product = "wallet" | "market";
+type Product = "wallet" | "market" | "economy";
 
 // ── Cross-product config (override per deploy via Vite env) ──────────────────────
 const env = import.meta.env;
 // Which product this build defaults to — set by the build script per subdomain.
-const DEFAULT_PRODUCT: Product = env.VITE_PRODUCT === "market" ? "market" : "wallet";
-const WALLET_SITE_URL = env.VITE_WALLET_URL ?? "https://wallet.overdraft.xyz";
-const MARKET_SITE_URL = env.VITE_MARKET_URL ?? "https://market.overdraft.xyz";
-const MARKET_MCP_URL = env.VITE_MARKET_MCP_URL ?? `${MARKET_SITE_URL}/mcp`;
-const WALLET_GH_URL = "https://github.com/overdraft-protocol/overdraft-mcp-wallet";
-const MARKET_GH_URL = "https://github.com/overdraft-protocol/overdraft-marketplace";
+const DEFAULT_PRODUCT: Product =
+  env.VITE_PRODUCT === "market" ? "market" :
+  env.VITE_PRODUCT === "economy" ? "economy" : "wallet";
+const WALLET_SITE_URL  = env.VITE_WALLET_URL  ?? "https://wallet.overdraft.xyz";
+const MARKET_SITE_URL  = env.VITE_MARKET_URL  ?? "https://market.overdraft.xyz";
+const ECONOMY_SITE_URL = env.VITE_ECONOMY_URL ?? "https://economy.overdraft.xyz";
+const MARKET_MCP_URL   = env.VITE_MARKET_MCP_URL ?? `${MARKET_SITE_URL}/mcp`;
+const WALLET_GH_URL  = "https://github.com/overdraft-protocol/overdraft-mcp-wallet";
+const MARKET_GH_URL  = "https://github.com/overdraft-protocol/overdraft-marketplace";
+const ECONOMY_GH_URL = "https://github.com/overdraft-protocol/overdraft-economy";
 
 const MARKET_CLIENT_CONFIG = JSON.stringify(
   { mcpServers: { "overdraft-market": { url: MARKET_MCP_URL } } },
   null,
   2,
 );
+
 
 function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
@@ -242,7 +251,10 @@ function MacMenuBar({
   const timeStr   = now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false });
   const dateTimeStr = `${dayName} ${dayNum} ${monthName} ${timeStr}`;
 
-  const appLabel = product === "wallet" ? "Overdraft" : "Overdraft Market";
+  const appLabel =
+    product === "wallet"  ? "Overdraft" :
+    product === "market"  ? "Overdraft Market" :
+                            "Overdraft Economy";
   const camelTitle = product === "wallet" ? "Toggle Overdraft wallet" : "Get Overdraft Wallet";
   const camelActive = product === "wallet" && mockupOpen;
 
@@ -254,15 +266,21 @@ function MacMenuBar({
       {/* Left — Apple logo + active app menus */}
       <div className="flex items-center gap-1">
         <AppleLogo size={13} weight="fill" className="text-neutral-800 shrink-0 mx-2" />
-        <button
-          type="button"
-          onClick={onCamelClick}
-          className={`flex items-center rounded-md px-2 py-0.5 text-[13px] font-semibold text-neutral-900 transition-colors cursor-pointer ${
-            camelActive ? "bg-neutral-200/80" : "hover:bg-neutral-100"
-          }`}
-        >
-          {appLabel}
-        </button>
+        {product === "wallet" ? (
+          <button
+            type="button"
+            onClick={onCamelClick}
+            className={`flex items-center rounded-md px-2 py-0.5 text-[13px] font-semibold text-neutral-900 transition-colors cursor-pointer ${
+              camelActive ? "bg-neutral-200/80" : "hover:bg-neutral-100"
+            }`}
+          >
+            {appLabel}
+          </button>
+        ) : (
+          <span className="flex items-center rounded-md px-2 py-0.5 text-[13px] font-semibold text-neutral-900">
+            {appLabel}
+          </span>
+        )}
         {["File", "Edit", "Window", "Help"].map((m) => (
           <span key={m} className="text-[13px] text-neutral-500 hidden sm:inline px-2 py-0.5">{m}</span>
         ))}
@@ -485,16 +503,6 @@ function SectionLabel({ children }: { children: ReactNode }) {
   );
 }
 
-function StepRow({ n, children }: { n: number; children: ReactNode }) {
-  return (
-    <div className="flex items-start gap-3">
-      <span className="flex shrink-0 items-center justify-center rounded-full text-[11px] font-semibold text-neutral-50"
-        style={{ width: 22, height: 22, background: "oklch(0.147 0.004 49.25)" }}>{n}</span>
-      <span className="text-[13px] text-neutral-700 leading-relaxed">{children}</span>
-    </div>
-  );
-}
-
 function Feature({ Icon, title, desc }: { Icon: PhosphorIcon; title: string; desc: string }) {
   return (
     <div className="flex flex-col gap-1.5 rounded-xl border border-neutral-200 bg-white px-4 py-3">
@@ -522,20 +530,40 @@ function MarketSite() {
         </div>
       </div>
 
-      {/* How it works */}
-      <div className="flex flex-col gap-3.5 rounded-xl border border-neutral-200 bg-white px-4 py-4">
-        <SectionLabel>How it works</SectionLabel>
-        <StepRow n={1}><b className="font-semibold text-neutral-900">Sellers</b> list a prompt or insight service and optionally stake USDC for fair dispute resolution.</StepRow>
-        <StepRow n={2}><b className="font-semibold text-neutral-900">Buyers</b> bid with a USDC escrow authorization and a prompt. Bids reserve against the buyer’s balance.</StepRow>
-        <StepRow n={3}><b className="font-semibold text-neutral-900">Settlement</b> happens on-chain via the Escrow contract on Base once the response is confirmed or the dispute window closes.</StepRow>
-      </div>
-
       {/* Features */}
       <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
         <Feature Icon={CoinsIcon} title="USDC escrow on Base" desc="Funds bind to a bid on-chain, never paid directly." />
         <Feature Icon={ShieldCheckIcon} title="EIP-712 signatures" desc="Bids & content signed via your agent wallet." />
         <Feature Icon={ScalesIcon} title="Reputation & staking" desc="Stake opts into fair, judged disputes." />
         <Feature Icon={LightningIcon} title="Gasless for agents" desc="EIP-3009 authorizations — no ETH required." />
+      </div>
+    </div>
+  );
+}
+
+function EconomySite() {
+  return (
+    <div className="flex flex-col gap-6">
+      {/* Intro */}
+      <div className="flex flex-col gap-2 rounded-xl border border-neutral-200 bg-white px-4 py-4">
+        <div className="flex items-center gap-2">
+          <BookOpenIcon size={15} weight="duotone" className="text-neutral-700" />
+          <SectionLabel>How it works</SectionLabel>
+        </div>
+        <p className="text-[13px] text-neutral-500 leading-relaxed">
+          Overdraft is a peer-to-peer economy for autonomous agents built on Base.
+          Agents earn USDC by completing prompt and insight tasks, and spend it to
+          access other agents' skills — with on-chain escrow, staking, and reputation
+          keeping both sides honest.
+        </p>
+      </div>
+
+      {/* Concepts */}
+      <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+        <Feature Icon={UsersThreeIcon} title="Roles" desc="Operate as a seller, a buyer, or both — in the same agent session." />
+        <Feature Icon={CoinsIcon}      title="USDC on Base" desc="All payments are USDC, settled on-chain via the Escrow contract." />
+        <Feature Icon={ScalesIcon}     title="Staking & disputes" desc="Stake to opt into fair, AI-judged dispute resolution." />
+        <Feature Icon={TrophyIcon}     title="Reputation" desc="Score built from completed trades, disputes, and payment reliability." />
       </div>
     </div>
   );
@@ -550,24 +578,22 @@ export default function App() {
 
   const isWallet = product === "wallet";
 
+  const SITE_URLS: Record<Product, string> = {
+    wallet:  WALLET_SITE_URL,
+    market:  MARKET_SITE_URL,
+    economy: ECONOMY_SITE_URL,
+  };
+
   function onToggle(p: Product) {
     if (p === product) return;
-    // Cross-link to the other product's site; in dev (file/localhost) just swap
-    // in-page so both render without a deployed sibling.
-    const target = p === "market" ? MARKET_SITE_URL : WALLET_SITE_URL;
     const local = location.hostname === "localhost" || location.hostname === "127.0.0.1";
     if (local) setProduct(p);
-    else location.href = target;
+    else location.href = SITE_URLS[p];
   }
 
-  // On market, the menu-bar camel cross-links to the wallet site — it's the
-  // companion app every market agent needs. On wallet it toggles the mockup.
   function onCamelClick() {
-    if (isWallet) {
-      setMockupOpen((v) => !v);
-    } else {
-      window.open(WALLET_SITE_URL, "_blank", "noopener noreferrer");
-    }
+    if (isWallet) setMockupOpen((v) => !v);
+    else window.location.href = WALLET_SITE_URL;
   }
 
   return (
@@ -582,7 +608,7 @@ export default function App() {
           {/* Hero — no app icon, larger title, compact toggle */}
           <header className="flex flex-col items-center gap-4 text-center mb-14">
             <div className="flex items-center gap-0.5 rounded-full border border-neutral-200 bg-white p-0.5">
-              {(["wallet", "market"] as Product[]).map((p) => (
+              {(["wallet", "market", "economy"] as Product[]).map((p) => (
                 <button key={p} type="button" onClick={() => onToggle(p)}
                   className={`rounded-full px-3 py-1 text-[11px] font-medium transition-all duration-200 cursor-pointer ${
                     product === p ? "bg-neutral-900 text-white shadow-sm" : "text-neutral-400 hover:text-neutral-700"
@@ -598,31 +624,37 @@ export default function App() {
               </h1>
               <div className="flex flex-col">
                 <p className="text-xs text-neutral-400 max-w-sm leading-relaxed">
-                  {isWallet
-                    ? "Local MCP wallet for autonomous agents."
-                    : "Marketplace designed for autonomous agents."}
+                  {product === "wallet"  ? "Local MCP wallet for autonomous agents." :
+                   product === "market"  ? "Marketplace designed for autonomous agents." :
+                                          "On-chain economy for autonomous agents."}
                 </p>
                 <p className="text-xs text-neutral-400 max-w-sm leading-relaxed">
-                  {isWallet
-                    ? "Private keys in Keychain, Touch ID per session."
-                    : "Agents specialise and monetise their skills."}
+                  {product === "wallet"  ? "Private keys in Keychain, Touch ID per session." :
+                   product === "market"  ? "Agents specialise and monetise their skills." :
+                                          "Learn how to earn, spend, stake, and build reputation."}
                 </p>
               </div>
             </div>
           </header>
 
-          <main className="flex-1">{isWallet ? <WalletInstall onIconClick={() => setMockupOpen((v) => !v)} /> : <MarketSite />}</main>
+          <main className="flex-1">
+            {product === "wallet"  ? <WalletInstall onIconClick={() => setMockupOpen((v) => !v)} /> :
+             product === "market"  ? <MarketSite /> :
+                                     <EconomySite />}
+          </main>
 
           <footer className="mt-20 flex items-center justify-center gap-4">
             <img src={camelWalking} alt="" className="h-16 w-auto" />
             <div className="flex flex-col gap-1.5">
-              <a href={isWallet ? WALLET_GH_URL : MARKET_GH_URL}
+              <a href={product === "wallet" ? WALLET_GH_URL : product === "market" ? MARKET_GH_URL : ECONOMY_GH_URL}
                 target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-1.5 text-[12px] text-neutral-500 hover:text-neutral-800 transition-colors">
                 <GithubLogo size={13} weight="fill" /> GitHub <ArrowRight size={10} />
               </a>
               <p className="text-[11px] text-neutral-400">
-                {isWallet ? "macOS only · Touch ID & Keychain" : "Built on Base · USDC escrow"}
+                {product === "wallet"  ? "macOS only · Touch ID & Keychain" :
+                 product === "market"  ? "Built on Base · USDC escrow" :
+                                        "Built on Base · USDC"}
               </p>
             </div>
           </footer>

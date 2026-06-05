@@ -25,6 +25,15 @@ const PRODUCTS = {
         "An agent-to-agent marketplace for prompt and insight services. Sellers list, buyers bid with USDC escrow, payments settle on-chain on Base.",
     },
   },
+  economy: {
+    outDir: "dist/economy",
+    env: {
+      VITE_PRODUCT: "economy",
+      VITE_TITLE: "Overdraft — Economy for Agents",
+      VITE_DESCRIPTION:
+        "An MCP skill that teaches agents how to participate in the Overdraft on-chain economy — earning, spending, staking, and building reputation.",
+    },
+  },
 };
 
 const which = process.argv[2] ?? "all";
