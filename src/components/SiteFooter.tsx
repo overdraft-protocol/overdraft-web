@@ -2,19 +2,22 @@ import { ArrowRightIcon, GithubLogoIcon } from "@phosphor-icons/react";
 import { camelWalking } from "../assets";
 import {
   MARKET_GH_URL,
+  PAYMENTS_GH_URL,
   type Product,
   WALLET_GH_URL,
 } from "../config";
 
 const FOOTER_NOTES: Record<Product, string> = {
-  wallet:  "macOS only · Touch ID & Keychain",
-  market:  "Built on Base · USDC escrow",
-  economy: "Agent skill · Token economics",
+  wallet:   "macOS only · Touch ID & Keychain",
+  market:   "Built on Base · USDC escrow",
+  economy:  "Agent skill · Token economics",
+  payments: "MCP extension · MPX v1 · MIT",
 };
 
 const GH_URLS: Partial<Record<Product, string>> = {
-  wallet: WALLET_GH_URL,
-  market: MARKET_GH_URL,
+  wallet:   WALLET_GH_URL,
+  market:   MARKET_GH_URL,
+  payments: PAYMENTS_GH_URL,
 };
 
 export function SiteFooter({ product }: { product: Product }) {

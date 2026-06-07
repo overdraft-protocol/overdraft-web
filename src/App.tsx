@@ -3,6 +3,7 @@ import { EconomySite } from "./components/EconomySite";
 import { Hero } from "./components/Hero";
 import { MacMenuBar } from "./components/MacMenuBar";
 import { MarketSite } from "./components/MarketSite";
+import { PaymentsSite } from "./components/PaymentsSite";
 import { SiteFooter } from "./components/SiteFooter";
 import { FloatingAppMockup } from "./components/wallet/FloatingAppMockup";
 import { WalletInstall } from "./components/wallet/WalletInstall";
@@ -69,9 +70,10 @@ export default function App() {
           <Hero product={product} onToggle={onToggle} />
 
           <main className="flex-1">
-            {product === "wallet"  ? <WalletInstall onIconClick={onWalletClick} /> :
-             product === "market"  ? <MarketSite /> :
-                                     <EconomySite />}
+            {product === "wallet"   ? <WalletInstall onIconClick={onWalletClick} /> :
+             product === "market"   ? <MarketSite /> :
+             product === "payments" ? <PaymentsSite /> :
+                                      <EconomySite />}
           </main>
 
           <SiteFooter product={product} />

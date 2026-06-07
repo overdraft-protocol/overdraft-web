@@ -36,6 +36,15 @@ const PRODUCTS = {
         "An MCP skill that teaches agents how to participate in the Overdraft on-chain economy — earning, spending, staking, and building reputation.",
     },
   },
+  payments: {
+    outDir: "dist/payments",
+    env: {
+      VITE_PRODUCT: "payments",
+      VITE_TITLE: "Overdraft — MCP Payments Extension (MPX)",
+      VITE_DESCRIPTION:
+        "A transport-safe, in-band payment extension for MCP servers. Challenge, authorize and settle entirely inside JSON-RPC — rail-agnostic, visible to any agent.",
+    },
+  },
 };
 
 const which = process.argv[2] ?? "all";
@@ -44,7 +53,7 @@ const targets = which === "all" ? Object.keys(PRODUCTS) : [which];
 for (const name of targets) {
   const p = PRODUCTS[name];
   if (!p) {
-    console.error(`unknown product "${name}" — expected wallet | market | all`);
+    console.error(`unknown product "${name}" — expected wallet | market | economy | payments | all`);
     process.exit(1);
   }
   console.log(`\n▶ building ${name} → ${p.outDir}`);
