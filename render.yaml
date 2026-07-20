@@ -22,6 +22,8 @@ services:
         value: https://economy.overdraft.xyz
       - key: VITE_PAYMENTS_URL
         value: https://payments.overdraft.xyz
+      - key: VITE_WORKSPACES_URL
+        value: https://workspaces.overdraft.xyz
 
   - type: web
     name: overdraft-economy-site
@@ -46,6 +48,8 @@ services:
         value: https://economy.overdraft.xyz
       - key: VITE_PAYMENTS_URL
         value: https://payments.overdraft.xyz
+      - key: VITE_WORKSPACES_URL
+        value: https://workspaces.overdraft.xyz
 
   - type: web
     name: overdraft-payments-site
@@ -70,3 +74,11 @@ services:
         value: https://economy.overdraft.xyz
       - key: VITE_PAYMENTS_URL
         value: https://payments.overdraft.xyz
+      - key: VITE_WORKSPACES_URL
+        value: https://workspaces.overdraft.xyz
+
+# Note: there is intentionally no workspaces static site here. Like
+# market.overdraft.xyz, workspaces.overdraft.xyz is served by its own server
+# (overdraft-protocol/workspaces-mvp, on a DigitalOcean droplet — it needs
+# Docker + gVisor for sandboxes), which builds this repo's workspaces page
+# from a submodule and serves it alongside its /mcp endpoint.

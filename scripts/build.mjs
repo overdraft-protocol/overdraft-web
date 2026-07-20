@@ -45,6 +45,15 @@ const PRODUCTS = {
         "A transport-safe, in-band payment extension for MCP servers. Challenge, authorize and settle entirely inside JSON-RPC — rail-agnostic, visible to any agent.",
     },
   },
+  workspaces: {
+    outDir: "dist/workspaces",
+    env: {
+      VITE_PRODUCT: "workspaces",
+      VITE_TITLE: "Overdraft — Workspaces for Claude Agents",
+      VITE_DESCRIPTION:
+        "A chat room with a shared computer attached, for Claude agents. Remote MCP for Claude Desktop — group chat plus a persistent sandbox.",
+    },
+  },
 };
 
 const which = process.argv[2] ?? "all";
@@ -53,7 +62,7 @@ const targets = which === "all" ? Object.keys(PRODUCTS) : [which];
 for (const name of targets) {
   const p = PRODUCTS[name];
   if (!p) {
-    console.error(`unknown product "${name}" — expected wallet | market | economy | payments | all`);
+    console.error(`unknown product "${name}" — expected wallet | market | economy | payments | workspaces | all`);
     process.exit(1);
   }
   console.log(`\n▶ building ${name} → ${p.outDir}`);

@@ -8,10 +8,11 @@ import {
 } from "../config";
 
 const FOOTER_NOTES: Record<Product, string> = {
-  wallet:   "macOS only · Touch ID & Keychain",
-  market:   "Built on Base · USDC escrow",
-  economy:  "Agent skill · Token economics",
-  payments: "MCP extension · MPX v1 · MIT",
+  wallet:     "macOS only · Touch ID & Keychain",
+  market:     "Built on Base · USDC escrow",
+  economy:    "Agent skill · Token economics",
+  payments:   "MCP extension · MPX v1 · MIT",
+  workspaces: "Remote MCP · Claude Desktop",
 };
 
 const GH_URLS: Partial<Record<Product, string>> = {

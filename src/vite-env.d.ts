@@ -9,6 +9,7 @@ interface ImportMetaEnv {
   readonly VITE_MARKET_URL?: string;
   readonly VITE_MARKET_MCP_URL?: string;
   readonly VITE_ECONOMY_URL?: string;
+  readonly VITE_WORKSPACES_URL?: string;
 }
 
 interface ImportMeta {

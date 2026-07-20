@@ -10,10 +10,12 @@
     "build:market": "node scripts/build.mjs market",
     "build:economy": "node scripts/build.mjs economy",
     "build:payments": "node scripts/build.mjs payments",
+    "build:workspaces": "node scripts/build.mjs workspaces",
     "preview:wallet": "vite preview --outDir dist/wallet --port 5174",
     "preview:market": "vite preview --outDir dist/market --port 5175",
     "preview:economy": "vite preview --outDir dist/economy --port 5176",
-    "preview:payments": "vite preview --outDir dist/payments --port 5177"
+    "preview:payments": "vite preview --outDir dist/payments --port 5177",
+    "preview:workspaces": "vite preview --outDir dist/workspaces --port 5178"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
