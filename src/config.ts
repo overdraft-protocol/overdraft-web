@@ -1,6 +1,6 @@
 const env = import.meta.env;
 
-export type Product = "wallet" | "market" | "economy" | "payments" | "workspaces";
+export type Product = "wallet" | "market" | "economy" | "payments" | "workspaces" | "portps";
 
 /** Dev host suffix — lvh.me resolves to 127.0.0.1 and supports cross-subdomain cookies. */
 export const DEV_HOST_SUFFIX = "lvh.me";
@@ -11,6 +11,7 @@ const DEV_SUBDOMAIN_PRODUCT: Record<string, Product> = {
   [`economy.${DEV_HOST_SUFFIX}`]: "economy",
   [`payments.${DEV_HOST_SUFFIX}`]: "payments",
   [`workspaces.${DEV_HOST_SUFFIX}`]: "workspaces",
+  [`portps.${DEV_HOST_SUFFIX}`]: "portps",
 };
 
 const LEGACY_DEV_HOST: Record<string, Product> = {
@@ -21,9 +22,10 @@ const LEGACY_DEV_HOST: Record<string, Product> = {
   "economy.localhost": "economy",
   "payments.localhost": "payments",
   "workspaces.localhost": "workspaces",
+  "portps.localhost": "portps",
 };
 
-/** Product inferred from wallet.lvh.me / market.lvh.me / economy.lvh.me / payments.lvh.me / workspaces.lvh.me. */
+/** Product inferred from wallet.lvh.me / market.lvh.me / economy.lvh.me / payments.lvh.me / workspaces.lvh.me / portps.lvh.me. */
 export function devProductFromHostname(): Product | null {
   return DEV_SUBDOMAIN_PRODUCT[location.hostname] ?? null;
 }
@@ -48,7 +50,8 @@ export const DEFAULT_PRODUCT: Product =
   (env.VITE_PRODUCT === "market"     ? "market"     :
    env.VITE_PRODUCT === "economy"    ? "economy"    :
    env.VITE_PRODUCT === "payments"   ? "payments"   :
-   env.VITE_PRODUCT === "workspaces" ? "workspaces" : "wallet");
+   env.VITE_PRODUCT === "workspaces" ? "workspaces" :
+   env.VITE_PRODUCT === "portps"     ? "portps"     : "wallet");
 
 /** Sibling-product URL in dev, derived from the live origin (e.g. payments.lvh.me:5174).
  *  Deriving from the host means a newly added product can never fall through to a
@@ -64,6 +67,7 @@ const PROD_SITE_URLS: Record<Product, string> = {
   economy:    env.VITE_ECONOMY_URL    ?? "https://economy.overdraft.xyz",
   payments:   env.VITE_PAYMENTS_URL   ?? "https://payments.overdraft.xyz",
   workspaces: env.VITE_WORKSPACES_URL ?? "https://workspaces.overdraft.xyz",
+  portps:     env.VITE_PORTPS_URL     ?? "https://portps.overdraft.xyz",
 };
 
 export const SITE_URLS: Record<Product, string> = env.DEV
@@ -73,6 +77,7 @@ export const SITE_URLS: Record<Product, string> = env.DEV
       economy:    devSiteUrl("economy"),
       payments:   devSiteUrl("payments"),
       workspaces: devSiteUrl("workspaces"),
+      portps:     devSiteUrl("portps"),
     }
   : PROD_SITE_URLS;
 
@@ -81,10 +86,15 @@ export const MARKET_MCP_URL = env.VITE_MARKET_MCP_URL ?? `${SITE_URLS.market}/mc
 export const WALLET_GH_URL   = "https://github.com/overdraft-protocol/overdraft-mcp-wallet";
 export const MARKET_GH_URL   = "https://github.com/overdraft-protocol/overdraft-marketplace";
 export const PAYMENTS_GH_URL = "https://github.com/overdraft-protocol/mcp-payments";
+export const PORTPS_GH_URL   = "https://github.com/overdraft-protocol/portps";
 
 /** npm package name for the MCP payments extension (MPX). */
 export const PAYMENTS_NPM_PKG = "@overdraft-protocol/mpx";
 export const PAYMENTS_NPM_URL = `https://www.npmjs.com/package/${PAYMENTS_NPM_PKG}`;
+
+/** npm package name for the portps CLI. */
+export const PORTPS_NPM_PKG = "@overdraft-protocol/portps";
+export const PORTPS_NPM_URL = `https://www.npmjs.com/package/${PORTPS_NPM_PKG}`;
 
 const VERSION = "0.1.0";
 const GH_RELEASE_BASE = `https://github.com/overdraft-protocol/overdraft-mcp-wallet/releases/download`;

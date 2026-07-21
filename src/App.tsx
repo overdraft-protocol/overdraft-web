@@ -4,6 +4,7 @@ import { Hero } from "./components/Hero";
 import { MacMenuBar } from "./components/MacMenuBar";
 import { MarketSite } from "./components/MarketSite";
 import { PaymentsSite } from "./components/PaymentsSite";
+import { PortpsSite } from "./components/PortpsSite";
 import { SiteFooter } from "./components/SiteFooter";
 import { WorkspacesSite } from "./components/WorkspacesSite";
 import { FloatingAppMockup } from "./components/wallet/FloatingAppMockup";
@@ -75,6 +76,7 @@ export default function App() {
              product === "market"     ? <MarketSite /> :
              product === "payments"   ? <PaymentsSite /> :
              product === "workspaces" ? <WorkspacesSite /> :
+             product === "portps"     ? <PortpsSite /> :
                                         <EconomySite />}
           </main>
 

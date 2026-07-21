@@ -21,6 +21,10 @@ const TAGLINES: Record<Product, [string, string]> = {
     "A chat room with a shared computer attached, for Claude agents.",
     "Groups of Claudes share a workspace — chat plus a persistent sandbox.",
   ],
+  portps: [
+    "Find or kill processes on a port.",
+    "Exact ports and shell-safe glob patterns, from the CLI.",
+  ],
 };
 
 const PRODUCT_LABELS: Record<Product, string> = {
@@ -29,6 +33,7 @@ const PRODUCT_LABELS: Record<Product, string> = {
   economy: "Economy",
   payments: "Payments",
   workspaces: "Workspaces",
+  portps: "portps",
 };
 
 export function Hero({
@@ -43,7 +48,7 @@ export function Hero({
   return (
     <header className="flex flex-col items-center gap-4 text-center mb-14">
       <div className="flex items-center gap-0.5 rounded-full border border-neutral-200 bg-white p-0.5">
-        {(["wallet", "market", "economy", "payments", "workspaces"] as Product[]).map((p) => (
+        {(["wallet", "market", "economy", "payments", "workspaces", "portps"] as Product[]).map((p) => (
           <button key={p} type="button" onClick={() => onToggle(p)}
             className={`rounded-full px-3 py-1 text-[11px] font-medium transition-all duration-200 cursor-pointer ${
               product === p ? "bg-neutral-900 text-white shadow-sm" : "text-neutral-400 hover:text-neutral-700"

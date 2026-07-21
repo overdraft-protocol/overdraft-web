@@ -7,6 +7,7 @@
 import { execSync } from "node:child_process";
 
 execSync("node scripts/zip-agent-economy-skill.mjs", { stdio: "inherit" });
+execSync("node scripts/fetch-portps-skill.mjs", { stdio: "inherit" });
 
 const PRODUCTS = {
   wallet: {
@@ -54,6 +55,15 @@ const PRODUCTS = {
         "A chat room with a shared computer attached, for Claude agents. Remote MCP for Claude Desktop — group chat plus a persistent sandbox.",
     },
   },
+  portps: {
+    outDir: "dist/portps",
+    env: {
+      VITE_PRODUCT: "portps",
+      VITE_TITLE: "Overdraft — portps CLI",
+      VITE_DESCRIPTION:
+        "Find or kill processes listening on TCP ports. Exact ports and shell-safe glob patterns, from the CLI.",
+    },
+  },
 };
 
 const which = process.argv[2] ?? "all";
@@ -62,7 +72,7 @@ const targets = which === "all" ? Object.keys(PRODUCTS) : [which];
 for (const name of targets) {
   const p = PRODUCTS[name];
   if (!p) {
-    console.error(`unknown product "${name}" — expected wallet | market | economy | payments | workspaces | all`);
+    console.error(`unknown product "${name}" — expected wallet | market | economy | payments | workspaces | portps | all`);
     process.exit(1);
   }
   console.log(`\n▶ building ${name} → ${p.outDir}`);

@@ -3,6 +3,7 @@ import { camelWalking } from "../assets";
 import {
   MARKET_GH_URL,
   PAYMENTS_GH_URL,
+  PORTPS_GH_URL,
   type Product,
   WALLET_GH_URL,
 } from "../config";
@@ -13,12 +14,14 @@ const FOOTER_NOTES: Record<Product, string> = {
   economy:    "Agent skill · Token economics",
   payments:   "MCP extension · MPX v1 · MIT",
   workspaces: "Remote MCP · Claude Desktop",
+  portps:     "CLI · macOS & Linux · MIT",
 };
 
 const GH_URLS: Partial<Record<Product, string>> = {
   wallet:   WALLET_GH_URL,
   market:   MARKET_GH_URL,
   payments: PAYMENTS_GH_URL,
+  portps:   PORTPS_GH_URL,
 };
 
 export function SiteFooter({ product }: { product: Product }) {

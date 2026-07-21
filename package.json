@@ -4,18 +4,20 @@
   "type": "module",
   "description": "Marketing sites for Overdraft Wallet and Overdraft Market — one codebase, built to per-subdomain static sites.",
   "scripts": {
-    "dev": "node scripts/zip-agent-economy-skill.mjs && vite",
+    "dev": "node scripts/zip-agent-economy-skill.mjs && node scripts/fetch-portps-skill.mjs && vite",
     "build": "node scripts/build.mjs all",
     "build:wallet": "node scripts/build.mjs wallet",
     "build:market": "node scripts/build.mjs market",
     "build:economy": "node scripts/build.mjs economy",
     "build:payments": "node scripts/build.mjs payments",
     "build:workspaces": "node scripts/build.mjs workspaces",
+    "build:portps": "node scripts/build.mjs portps",
     "preview:wallet": "vite preview --outDir dist/wallet --port 5174",
     "preview:market": "vite preview --outDir dist/market --port 5175",
     "preview:economy": "vite preview --outDir dist/economy --port 5176",
     "preview:payments": "vite preview --outDir dist/payments --port 5177",
-    "preview:workspaces": "vite preview --outDir dist/workspaces --port 5178"
+    "preview:workspaces": "vite preview --outDir dist/workspaces --port 5178",
+    "preview:portps": "vite preview --outDir dist/portps --port 5179"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
