@@ -75,25 +75,6 @@ export function PortpsSite() {
             global use.
           </p>
         </div>
-
-        <div className="flex flex-wrap items-center gap-2">
-          <a
-            href={PORTPS_NPM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex w-fit items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-[11px] font-medium text-neutral-700 transition-colors hover:border-neutral-300 hover:bg-neutral-50 active:scale-[0.99]"
-          >
-            <PackageIcon size={11} weight="bold" /> View on npm
-          </a>
-          <a
-            href={PORTPS_GH_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex w-fit items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-[11px] font-medium text-neutral-700 transition-colors hover:border-neutral-300 hover:bg-neutral-50 active:scale-[0.99]"
-          >
-            <GithubLogoIcon size={11} weight="bold" /> View on GitHub
-          </a>
-        </div>
       </div>
     </div>
   );
