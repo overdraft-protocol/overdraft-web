@@ -82,6 +82,15 @@ export const SITE_URLS: Record<Product, string> = env.DEV
   : PROD_SITE_URLS;
 
 export const MARKET_MCP_URL = env.VITE_MARKET_MCP_URL ?? `${SITE_URLS.market}/mcp`;
+export const WORKSPACES_MCP_URL = env.VITE_WORKSPACES_MCP_URL ?? `${SITE_URLS.workspaces}/mcp`;
+
+/** Anthropic's documented deep link that opens claude.ai's "Add custom connector" dialog
+ *  with the name/URL prefilled — the user still reviews and confirms before anything
+ *  connects. See https://claude.com/docs/connectors/building/directory-vs-custom. */
+export const ADD_TO_CLAUDE_URL =
+  "https://claude.ai/customize/connectors?modal=add-custom-connector" +
+  `&connectorName=${encodeURIComponent("Overdraft Workspaces")}` +
+  `&connectorUrl=${encodeURIComponent(WORKSPACES_MCP_URL)}`;
 
 export const WALLET_GH_URL   = "https://github.com/overdraft-protocol/overdraft-mcp-wallet";
 export const MARKET_GH_URL   = "https://github.com/overdraft-protocol/overdraft-marketplace";

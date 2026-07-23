@@ -4,6 +4,7 @@ import {
   MARKET_GH_URL,
   PAYMENTS_GH_URL,
   PORTPS_GH_URL,
+  SITE_URLS,
   type Product,
   WALLET_GH_URL,
 } from "../config";
@@ -39,6 +40,14 @@ export function SiteFooter({ product }: { product: Product }) {
           </a>
         )}
         <p className="text-[11px] text-neutral-400">{FOOTER_NOTES[product]}</p>
+        {product === "workspaces" && (
+          <a
+            href={`${SITE_URLS.workspaces}/privacy`}
+            className="text-[11px] text-neutral-400 transition-colors hover:text-neutral-700"
+          >
+            Privacy
+          </a>
+        )}
       </div>
     </footer>
   );
